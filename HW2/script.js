@@ -81,3 +81,48 @@ console.log("Task5")
   let isAdult = (age.toLowerCase() === 'yes');
   console.log(isAdult);
 }
+
+console.log("Task6")
+{
+  // Prompt the user to enter the lengths of the sides
+  let a = parseFloat(prompt("Enter the length of the first side of the triangle:"));
+  let b = parseFloat(prompt("Enter the length of the second side of the triangle:"));
+  let c = parseFloat(prompt("Enter the length of the third side of the triangle:"));
+
+  // Check if the entered values are valid
+  if (isNaN(a) || isNaN(b) || isNaN(c) || a <= 0 || b <= 0 || c <= 0) {
+    console.log('Incorrect data');
+  } else {
+    if (a + b > c && a + c > b && b + c > a) {
+      let s = (a + b + c) / 2; // Semi-perimeter
+      let area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+
+      console.log(`The area of the triangle is: ${area.toFixed(3)}`);
+
+      let isRightTriangle =
+        (a * a + b * b === c * c) ||
+        (a * a + c * c === b * b) ||
+        (b * b + c * c === a * a);
+
+      console.log(`Is the triangle a right triangle? ${isRightTriangle}`);
+    } else {
+      console.log('Incorrect data');
+    }
+  }
+}
+
+console.log("Task7")
+{
+  let currentHour = new Date().getHours();
+
+  if (currentHour >= 23 || currentHour < 5) {
+    console.log("Good night");
+  } else if (currentHour >= 5 && currentHour < 11) {
+    console.log("Good morning");
+  } else if (currentHour >= 11 && currentHour < 17) {
+    console.log("Good day");
+  } else if (currentHour >= 17 && currentHour < 23) {
+    console.log("Good evening");
+  }
+
+}
