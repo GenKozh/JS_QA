@@ -12,7 +12,7 @@ let mentor = {
 
 console.log("Taks1" + " " + propsCount(mentor));
 
-//Task 1
+//Task 2
 
 let student = {
   name: "John Doe",
