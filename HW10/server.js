@@ -1,67 +1,38 @@
-//Task 1
-function getPromise(message, delay) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(message);
-    }, delay);
-  });
-}
+const http = require('http');
+const os = require('os');
+const path = require('path');
 
-// Example usage
-getPromise("test promise", 2000).then(function (data) {
-  console.log(data);
+// Server configuration
+const PORT = 5000;
+
+http.createServer((req, res) => {
+  // Gather system information
+  const userName = os.userInfo().username;
+  const osType = os.type();
+  const uptimeMinutes = (os.uptime() / 60).toFixed(2); // Convert seconds to minutes
+  const currentDir = process.cwd();
+  const serverFileName = path.basename(__filename);
+
+  // Construct the HTML content
+  const responseContent = `
+    <html>
+      <head>
+        <title>System Information</title>
+      </head>
+      <body>
+        <h1>System Information</h1>
+        <p><strong>Current user name:</strong> ${userName}</p>
+        <p><strong>OS type:</strong> ${osType}</p>
+        <p><strong>System work time:</strong> ${uptimeMinutes} minutes</p>
+        <p><strong>Current work directory:</strong> ${currentDir}</p>
+        <p><strong>Server file name:</strong> ${serverFileName}</p>
+      </body>
+    </html>
+  `;
+
+  // Send response
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end(responseContent);
+}).listen(PORT, () => {
+  console.log(`Server is listening on http://localhost:${PORT}`);
 });
-
-//Task 2
-
-function calcArrProduct(arr) {
-  return new Promise((resolve, reject) => {
-    if (arr.every(item => typeof item === 'number')) {
-      const product = arr.reduce((acc, num) => acc * num, 1);
-      resolve(product);
-    } else {
-      reject("Error! Incorrect array!");
-    }
-  });
-}
-
-// Example usage
-calcArrProduct([3, 4, 5])
-  .then(result => console.log(result))
-  .catch(error => console.log(error));
-
-calcArrProduct([5, "user2", 7, 12])
-  .then(result => console.log(result))
-  .catch(error => console.log(error));
-
-
-//Task 3
-
-const delay = (i, time) => new Promise(resolve => setTimeout(() => resolve(i), time));
-
-function showNumbers() {
-  let promise = Promise.resolve();
-
-  for (let i = 0; i <= 10; i++) {
-    const randomTime = Math.floor(Math.random() * 3000);
-
-    promise = promise.then(() => delay(i, randomTime))
-      .then(result => console.log(result));
-  }
-}
-
-showNumbers();
-
-
-//Task 4
-const delay2 = (i, time) => new Promise(resolve => setTimeout(() => resolve(i), time));
-
-async function showNumbers2() {
-  for (let i = 0; i <= 10; i++) {
-    const randomTime = Math.floor(Math.random() * 3000);
-    const result = await delay2(i, randomTime);
-    console.log(result);
-  }
-}
-
-showNumbers2();

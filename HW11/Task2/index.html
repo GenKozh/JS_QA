@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Authors</title>
+</head>
+
+<body>
+  <button id="downloadButton" onclick="downloadAuthors()">Download books</button>
+  <ul id="authorList" style="list-style-type: disc; padding-left: 20px;"></ul>
+
+  <script>
+    function downloadAuthors() {
+      const xhr = new XMLHttpRequest();
+
+      xhr.open('GET', 'http://localhost:5000/authors', true);
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          const authors = JSON.parse(xhr.responseText);
+
+          const authorList = document.getElementById('authorList');
+          authorList.innerHTML = '';
+          authors.forEach(author => {
+            const listItem = document.createElement('li');
+            listItem.textContent = author;
+            authorList.appendChild(listItem);
+          });
+        }
+      };
+
+      xhr.send();
+    }
+  </script>
+</body>
+
+</html>
